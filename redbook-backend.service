@@ -1,0 +1,18 @@
+[Unit]
+Description=RedBook Backend Django Application
+After=network.target
+
+[Service]
+Type=notify
+User=www-data
+Group=www-data
+WorkingDirectory=/path/to/your/redbookBackend
+Environment="DJANGO_SETTINGS_MODULE=redBookBackend.settings_production"
+ExecStart=/usr/local/bin/gunicorn --config gunicorn.conf.py redBookBackend.wsgi:application
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target 
